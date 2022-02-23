@@ -1,12 +1,20 @@
 import React from "react";
 import Button from "../components/Button";
-import styles from "./Header.module.css";
+import styled from "styled-components";
+
+const StyledHeader = styled.header`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+`;
 
 function Header() {
   return (
-    <header className={styles.header}>
+    <StyledHeader>
       <Button type="button">Create profile</Button>
-    </header>
+    </StyledHeader>
   );
 }
 
