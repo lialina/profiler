@@ -10,12 +10,12 @@ const StyledHeader = styled.header`
   padding-bottom: 10px;
 `;
 
-function Header() {
+const Header = () => {
   return (
     <StyledHeader>
       <Button type="button">Create profile</Button>
     </StyledHeader>
   );
-}
+};
 
 export default Header;
