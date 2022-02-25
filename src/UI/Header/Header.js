@@ -2,10 +2,12 @@ import React from "react";
 import Button from "../../components/Button/Button";
 import StyledHeader from "./StyledHeader";
 
-const Header = () => {
+const Header = ({ openModal }) => {
   return (
     <StyledHeader>
-      <Button type="button">Create profile</Button>
+      <Button type="button" openModal={openModal}>
+        Create profile
+      </Button>
     </StyledHeader>
   );
 };

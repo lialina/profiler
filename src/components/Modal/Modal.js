@@ -3,12 +3,12 @@ import StyledBackdrop from "./StyledBackdrop";
 import StyledModal from "./StyledModal";
 import ModalButton from "./ModalButton";
 
-const Modal = () => {
+const Modal = ({ closeModal }) => {
   return (
     <StyledBackdrop>
       <StyledModal>
         <h2>Form</h2>
-        <ModalButton>Cancel</ModalButton>
+        <ModalButton onClick={closeModal}>Cancel</ModalButton>
       </StyledModal>
     </StyledBackdrop>
   );
