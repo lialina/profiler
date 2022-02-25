@@ -1,14 +1,18 @@
 import React from "react";
 import StyledBackdrop from "./StyledBackdrop";
+import StyledHeader from "../../UI/Header/StyledHeader";
 import StyledModal from "./StyledModal";
+import StyledWrapper from "./StyledWrapper";
 import ModalButton from "./ModalButton";
 
 const Modal = ({ closeModal }) => {
   return (
     <StyledBackdrop>
       <StyledModal>
-        <h2>Form</h2>
-        <ModalButton onClick={closeModal}>Cancel</ModalButton>
+        <StyledHeader>Form</StyledHeader>
+        <StyledWrapper>
+          <ModalButton onClick={closeModal}>Cancel</ModalButton>
+        </StyledWrapper>
       </StyledModal>
     </StyledBackdrop>
   );
