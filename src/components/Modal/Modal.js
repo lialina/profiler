@@ -4,6 +4,7 @@ import StyledHeader from "../../UI/Header/StyledHeader";
 import StyledModal from "./StyledModal";
 import StyledWrapper from "./StyledWrapper";
 import ModalButton from "./ModalButton";
+import Form from "../Form/Form";
 
 const Modal = ({ closeModal }) => {
   return (
@@ -11,7 +12,10 @@ const Modal = ({ closeModal }) => {
       <StyledModal>
         <StyledHeader>Form</StyledHeader>
         <StyledWrapper>
-          <ModalButton onClick={closeModal}>Cancel</ModalButton>
+          <Form />
+          <div>
+            <ModalButton onClick={closeModal}>Cancel</ModalButton>
+          </div>
         </StyledWrapper>
       </StyledModal>
     </StyledBackdrop>
