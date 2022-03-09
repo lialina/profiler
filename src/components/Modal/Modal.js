@@ -1,10 +1,12 @@
 import React from "react";
 import StyledBackdrop from "./StyledBackdrop";
-import StyledHeader from "../../UI/Header/StyledHeader";
-import StyledModal from "./StyledModal";
-import StyledWrapper from "./StyledWrapper";
-import ModalButton from "./ModalButton";
-import Form from "../Form/Form";
+import {
+  StyledModal,
+  StyledHeader,
+  StyledWrapper,
+  ModalButton,
+} from "./ModalStyles";
+import Form from "../ModalForm/ModalForm";
 
 const Modal = ({ closeModal }) => {
   return (
@@ -13,9 +15,7 @@ const Modal = ({ closeModal }) => {
         <StyledHeader>Form</StyledHeader>
         <StyledWrapper>
           <Form />
-          <div>
-            <ModalButton onClick={closeModal}>Cancel</ModalButton>
-          </div>
+          <ModalButton onClick={closeModal}>Cancel</ModalButton>
         </StyledWrapper>
       </StyledModal>
     </StyledBackdrop>
