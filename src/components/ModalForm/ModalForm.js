@@ -1,10 +1,18 @@
 import React from "react";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form } from "formik";
+import {
+  StyledField,
+  StyledErrorMessage,
+  StyledContainer,
+  StyledFormButton,
+} from "./StyledForm";
+import { StyledWrapper } from "../Modal/ModalStyles";
 import validationSchema from "./ValidationSchema";
 
 const initialValues = {
   firstName: "",
   lastName: "",
+  phone: "",
   email: "",
   bio: "",
 };
@@ -21,37 +29,52 @@ const ModalForm = () => {
       onSubmit={onSubmit}
     >
       <Form>
-        <div>
-          <Field
+        <StyledContainer>
+          <StyledField
             id="firstName"
             name="firstName"
             type="text"
             placeholder="First Name"
           />
-          <ErrorMessage name="firstName" />
-        </div>
-
-        <div>
-          <Field
+          <StyledErrorMessage name="firstName" />
+        </StyledContainer>
+        <StyledContainer>
+          <StyledField
             id="lastName"
             name="lastName"
             type="text"
             placeholder="Last Name"
           />
-          <ErrorMessage name="lastName" />
-        </div>
+          <StyledErrorMessage name="lastName" />
+        </StyledContainer>
+        <StyledContainer>
+          <StyledField
+            id="phone"
+            name="phone"
+            type="phone"
+            placeholder="Phone"
+          />
+          <StyledErrorMessage name="phone" />
+        </StyledContainer>
+        <StyledContainer>
+          <StyledField
+            id="email"
+            name="email"
+            type="email"
+            placeholder="Email"
+          />
+          <StyledErrorMessage name="email" />
+        </StyledContainer>
+        <StyledContainer>
+          <StyledField as="textarea" id="bio" name="bio" placeholder="Bio" />
+          <StyledErrorMessage name="bio" />
+        </StyledContainer>
 
-        <div>
-          <Field id="email" name="email" type="email" placeholder="Email" />
-          <ErrorMessage name="email" />
-        </div>
+        <StyledWrapper>
+          <StyledFormButton type="submit">Submit</StyledFormButton>
+        </StyledWrapper>
 
-        <div>
-          <Field as="textarea" id="bio" name="bio" placeholder="Bio" />
-          <ErrorMessage name="bio" />
-        </div>
-
-        <button type="submit">Submit</button>
+        {/* <button type="submit">Submit</button> */}
       </Form>
     </Formik>
   );

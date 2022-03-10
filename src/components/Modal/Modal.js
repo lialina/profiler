@@ -6,15 +6,15 @@ import {
   StyledWrapper,
   ModalButton,
 } from "./ModalStyles";
-import Form from "../ModalForm/ModalForm";
+import ModalForm from "../ModalForm/ModalForm";
 
 const Modal = ({ closeModal }) => {
   return (
     <StyledBackdrop>
       <StyledModal>
-        <StyledHeader>Form</StyledHeader>
+        <StyledHeader>Enter your information</StyledHeader>
         <StyledWrapper>
-          <Form />
+          <ModalForm />
           <ModalButton onClick={closeModal}>Cancel</ModalButton>
         </StyledWrapper>
       </StyledModal>
