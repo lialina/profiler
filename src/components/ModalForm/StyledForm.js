@@ -7,10 +7,10 @@ const StyledModal = styled(Form)``;
 const StyledField = styled(Field)`
   margin-top: 12px;
   margin-bottom: 4px;
+`;
 
-  // &:last-child {
-  //   margin-bottom: 0;
-  // }
+const StyledTextarea = styled(StyledField)`
+  resize: none;
 `;
 
 const StyledErrorMessage = styled(ErrorMessage)`
@@ -28,6 +28,7 @@ const StyledFormButton = styled(StyledButton)`
 export {
   StyledModal,
   StyledField,
+  StyledTextarea,
   StyledErrorMessage,
   StyledContainer,
   StyledFormButton,

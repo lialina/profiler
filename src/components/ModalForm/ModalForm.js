@@ -2,6 +2,7 @@ import React from "react";
 import { Formik, Form } from "formik";
 import {
   StyledField,
+  StyledTextarea,
   StyledErrorMessage,
   StyledContainer,
   StyledFormButton,
@@ -66,7 +67,7 @@ const ModalForm = () => {
           <StyledErrorMessage name="email" />
         </StyledContainer>
         <StyledContainer>
-          <StyledField as="textarea" id="bio" name="bio" placeholder="Bio" />
+          <StyledTextarea as="textarea" id="bio" name="bio" placeholder="Bio" />
           <StyledErrorMessage name="bio" />
         </StyledContainer>
 
