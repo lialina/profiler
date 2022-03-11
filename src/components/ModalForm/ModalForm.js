@@ -1,5 +1,5 @@
 import React from "react";
-import { Formik, Form } from "formik";
+import { Formik, Form, ErrorMessage } from "formik";
 import {
   StyledField,
   StyledTextarea,
@@ -37,8 +37,11 @@ const ModalForm = () => {
             type="text"
             placeholder="First Name"
           />
-          <StyledErrorMessage name="firstName" />
+          <ErrorMessage name="firstName">
+            {(msg) => <StyledErrorMessage>{msg}</StyledErrorMessage>}
+          </ErrorMessage>
         </StyledContainer>
+
         <StyledContainer>
           <StyledField
             id="lastName"
@@ -46,17 +49,23 @@ const ModalForm = () => {
             type="text"
             placeholder="Last Name"
           />
-          <StyledErrorMessage name="lastName" />
+          <ErrorMessage name="lastName">
+            {(msg) => <StyledErrorMessage>{msg}</StyledErrorMessage>}
+          </ErrorMessage>
         </StyledContainer>
+
         <StyledContainer>
           <StyledField
             id="phone"
             name="phone"
             type="phone"
-            placeholder="Phone"
+            placeholder="Phone starts with +..."
           />
-          <StyledErrorMessage name="phone" />
+          <ErrorMessage name="phone">
+            {(msg) => <StyledErrorMessage>{msg}</StyledErrorMessage>}
+          </ErrorMessage>
         </StyledContainer>
+
         <StyledContainer>
           <StyledField
             id="email"
@@ -64,11 +73,16 @@ const ModalForm = () => {
             type="email"
             placeholder="Email"
           />
-          <StyledErrorMessage name="email" />
+          <ErrorMessage name="email">
+            {(msg) => <StyledErrorMessage>{msg}</StyledErrorMessage>}
+          </ErrorMessage>
         </StyledContainer>
+
         <StyledContainer>
           <StyledTextarea as="textarea" id="bio" name="bio" placeholder="Bio" />
-          <StyledErrorMessage name="bio" />
+          <ErrorMessage name="bio">
+            {(msg) => <StyledErrorMessage>{msg}</StyledErrorMessage>}
+          </ErrorMessage>
         </StyledContainer>
 
         <StyledWrapper>

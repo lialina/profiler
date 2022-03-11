@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Form, Field, ErrorMessage } from "formik";
+import { Form, Field } from "formik";
 import StyledButton from "../Button/StyledButton";
 
 const StyledModal = styled(Form)``;
@@ -13,7 +13,7 @@ const StyledTextarea = styled(StyledField)`
   resize: none;
 `;
 
-const StyledErrorMessage = styled(ErrorMessage)`
+const StyledErrorMessage = styled.p`
   color: red;
   font-size: 12px;
 `;
