@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Formik, Form, ErrorMessage } from "formik";
 import {
   StyledField,
@@ -9,20 +9,32 @@ import {
 } from "./StyledForm";
 import { StyledWrapper } from "../Modal/ModalStyles";
 import validationSchema from "./ValidationSchema";
-
-const initialValues = {
-  firstName: "",
-  lastName: "",
-  phone: "",
-  email: "",
-  bio: "",
-};
-
-const onSubmit = (values) => {
-  console.log(values);
-};
+const axios = require("axios");
 
 const ModalForm = () => {
+  const [success, setSuccess] = useState();
+
+  const initialValues = {
+    firstName: "",
+    lastName: "",
+    phone: "",
+    email: "",
+    bio: "",
+  };
+
+  const onSubmit = async (values) => {
+    const { ...data } = values;
+    const response = axios
+      .post("http://localhost:3001/profiles", data)
+      .catch((err) => {
+        if (err && err.response) console.log("Error:", err);
+      });
+
+    if (response && response.data) {
+      setSuccess(response.data.message);
+    }
+  };
+
   return (
     <Formik
       initialValues={initialValues}
@@ -30,6 +42,7 @@ const ModalForm = () => {
       onSubmit={onSubmit}
     >
       <Form>
+        <p>{success ? success : ""}</p>
         <StyledContainer>
           <StyledField
             id="firstName"
