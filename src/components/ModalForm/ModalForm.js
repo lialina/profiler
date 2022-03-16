@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Formik, Form, ErrorMessage } from "formik";
 import {
   StyledField,
@@ -12,8 +12,6 @@ import validationSchema from "./ValidationSchema";
 const axios = require("axios");
 
 const ModalForm = () => {
-  const [success, setSuccess] = useState();
-
   const initialValues = {
     firstName: "",
     lastName: "",
@@ -23,16 +21,25 @@ const ModalForm = () => {
   };
 
   const onSubmit = async (values) => {
-    const { ...data } = values;
-    const response = axios
-      .post("http://localhost:3001/profiles", data)
-      .catch((err) => {
-        if (err && err.response) console.log("Error:", err);
-      });
+    const { ...profileData } = values;
+    console.log(profileData);
 
-    if (response && response.data) {
-      setSuccess(response.data.message);
-    }
+    const config = {
+      method: "post",
+      url: "http://localhost:3001/profiles",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: profileData,
+    };
+
+    axios(config)
+      .then(function (response) {
+        console.log(JSON.stringify(response.data));
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
 
   return (
@@ -42,7 +49,6 @@ const ModalForm = () => {
       onSubmit={onSubmit}
     >
       <Form>
-        <p>{success ? success : ""}</p>
         <StyledContainer>
           <StyledField
             id="firstName"
