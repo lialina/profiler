@@ -107,8 +107,6 @@ const ModalForm = () => {
         <StyledWrapper>
           <StyledFormButton type="submit">Submit</StyledFormButton>
         </StyledWrapper>
-
-        {/* <button type="submit">Submit</button> */}
       </Form>
     </Formik>
   );
