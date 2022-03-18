@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Formik, Form, ErrorMessage } from "formik";
 import {
   StyledField,
@@ -12,6 +12,8 @@ import validationSchema from "./ValidationSchema";
 const axios = require("axios");
 
 const ModalForm = () => {
+  const [errorMessage, setErrorMessage] = useState(null);
+
   const initialValues = {
     firstName: "",
     lastName: "",
@@ -24,24 +26,25 @@ const ModalForm = () => {
     const { ...profileData } = values;
     console.log(profileData);
 
-    const config = {
-      method: "post",
-      url: "http://localhost:3001/profiles",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      data: profileData,
-    };
+    try {
+      axios
+        .post("http://localhost:3001/profiles", profileData)
+        .then((response) => {
+          console.log(response);
 
-    axios(config)
-      .then(function (response) {
-        console.log(JSON.stringify(response.data));
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+          // if (response.data.error.errorMessage) {
+          //   console.log("Error is present: ", response.data.error.errorMessage);
+          //   setErrorMessage(response.data.error.errorMessage);
+          // } else {
+          //   return;
+          // }
+        });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
+  console.log(errorMessage);
   return (
     <Formik
       initialValues={initialValues}
