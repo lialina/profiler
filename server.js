@@ -23,7 +23,6 @@ let profiles = [];
 
 app
   .get("/profiles", async (req, res, next) => {
-    console.log("My profiles");
     try {
       res.json({ status: "success", code: 200, data: { profiles } });
     } catch (error) {
@@ -32,8 +31,6 @@ app
   })
 
   .post("/profiles", async (req, res, next) => {
-    console.log(req.body);
-
     try {
       try {
         const errorMessage = new Object();
@@ -49,7 +46,8 @@ app
         }
 
         if (!/^\+(?:[0-9] ?){6,14}[0-9]$/.test(req.body.phone)) {
-          errorMessage.phone = "Phone must start with + and contain 12 numbers";
+          errorMessage.phone =
+            "Phone must start with + and contain only numbers";
         }
 
         if (
@@ -64,15 +62,12 @@ app
         }
 
         if (Object.keys(errorMessage).length > 0) {
-          res
-            // This status
+          return res
             .status(400)
             .json({ status: "fail", code: 400, error: { errorMessage } });
         }
       } catch (error) {
-        console.error(error.message);
-        // throw error;
-        // next(error);
+        next(error);
       }
 
       const newProfile = {
@@ -86,7 +81,6 @@ app
         .json({ status: "success", code: 201, data: { newProfile } });
     } catch (error) {
       next(error);
-      console.error(error.message);
     }
   });
 
