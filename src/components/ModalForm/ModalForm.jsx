@@ -12,7 +12,7 @@ import validationSchema from "./ValidationSchema";
 const axios = require("axios");
 
 const ModalForm = () => {
-  const [errorMessage, setErrorMessage] = useState(null);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const initialValues = {
     firstName: "",
@@ -24,27 +24,21 @@ const ModalForm = () => {
 
   const onSubmit = async (values) => {
     const { ...profileData } = values;
-    console.log(profileData);
 
     try {
-      axios
-        .post("http://localhost:3001/profiles", profileData)
-        .then((response) => {
-          console.log(response);
-
-          // if (response.data.error.errorMessage) {
-          //   console.log("Error is present: ", response.data.error.errorMessage);
-          //   setErrorMessage(response.data.error.errorMessage);
-          // } else {
-          //   return;
-          // }
-        });
+      const response = await axios.post(
+        "http://localhost:3001/profiles",
+        profileData
+      );
+      if (errorMessage !== "") {
+        setErrorMessage("");
+      }
+      console.log(response);
     } catch (error) {
-      console.log(error);
+      setErrorMessage(error.response.data.error.errorMessage);
     }
   };
 
-  console.log(errorMessage);
   return (
     <Formik
       initialValues={initialValues}
@@ -62,6 +56,9 @@ const ModalForm = () => {
           <ErrorMessage name="firstName">
             {(msg) => <StyledErrorMessage>{msg}</StyledErrorMessage>}
           </ErrorMessage>
+          {errorMessage.firstName && (
+            <StyledErrorMessage>{errorMessage.firstName}</StyledErrorMessage>
+          )}
         </StyledContainer>
 
         <StyledContainer>
@@ -74,6 +71,9 @@ const ModalForm = () => {
           <ErrorMessage name="lastName">
             {(msg) => <StyledErrorMessage>{msg}</StyledErrorMessage>}
           </ErrorMessage>
+          {errorMessage.lastName && (
+            <StyledErrorMessage>{errorMessage.lastName}</StyledErrorMessage>
+          )}
         </StyledContainer>
 
         <StyledContainer>
@@ -86,6 +86,9 @@ const ModalForm = () => {
           <ErrorMessage name="phone">
             {(msg) => <StyledErrorMessage>{msg}</StyledErrorMessage>}
           </ErrorMessage>
+          {errorMessage.phone && (
+            <StyledErrorMessage>{errorMessage.phone}</StyledErrorMessage>
+          )}
         </StyledContainer>
 
         <StyledContainer>
@@ -98,6 +101,9 @@ const ModalForm = () => {
           <ErrorMessage name="email">
             {(msg) => <StyledErrorMessage>{msg}</StyledErrorMessage>}
           </ErrorMessage>
+          {errorMessage.email && (
+            <StyledErrorMessage>{errorMessage.email}</StyledErrorMessage>
+          )}
         </StyledContainer>
 
         <StyledContainer>
@@ -105,6 +111,9 @@ const ModalForm = () => {
           <ErrorMessage name="bio">
             {(msg) => <StyledErrorMessage>{msg}</StyledErrorMessage>}
           </ErrorMessage>
+          {errorMessage.bio && (
+            <StyledErrorMessage>{errorMessage.bio}</StyledErrorMessage>
+          )}
         </StyledContainer>
 
         <StyledWrapper>
