@@ -7,12 +7,14 @@ import {
   StyledContainer,
   StyledFormButton,
 } from "./StyledForm";
+import ServerError from "./ServerError";
 import { StyledWrapper } from "../Modal/ModalStyles";
 import validationSchema from "./ValidationSchema";
+import FormInput from "./FormInput";
 const axios = require("axios");
 
 const ModalForm = () => {
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errors, setErrors] = useState(null);
 
   const initialValues = {
     firstName: "",
@@ -22,20 +24,22 @@ const ModalForm = () => {
     bio: "",
   };
 
-  const onSubmit = async (values) => {
-    const { ...profileData } = values;
-
+  const onSubmit = async (values, actions) => {
     try {
+      if (errors) {
+        setErrors(null);
+      }
+
       const response = await axios.post(
         "http://localhost:3001/profiles",
-        profileData
+        values
       );
-      if (errorMessage !== "") {
-        setErrorMessage("");
-      }
+
       console.log(response);
     } catch (error) {
-      setErrorMessage(error.response.data.error.errorMessage);
+      setErrors(error.response.data.errors);
+
+      // actions.setFieldError("general", error.response.data.errors);
     }
   };
 
@@ -45,81 +49,58 @@ const ModalForm = () => {
       validationSchema={validationSchema}
       onSubmit={onSubmit}
     >
-      <Form>
-        <StyledContainer>
-          <StyledField
-            id="firstName"
+      {/* {(formikProps) => ( */}
+      {
+        <Form>
+          <FormInput
             name="firstName"
             type="text"
             placeholder="First Name"
+            errors={errors}
           />
-          <ErrorMessage name="firstName">
-            {(msg) => <StyledErrorMessage>{msg}</StyledErrorMessage>}
-          </ErrorMessage>
-          {errorMessage.firstName && (
-            <StyledErrorMessage>{errorMessage.firstName}</StyledErrorMessage>
-          )}
-        </StyledContainer>
 
-        <StyledContainer>
-          <StyledField
-            id="lastName"
+          <FormInput
             name="lastName"
             type="text"
             placeholder="Last Name"
+            errors={errors}
           />
-          <ErrorMessage name="lastName">
-            {(msg) => <StyledErrorMessage>{msg}</StyledErrorMessage>}
-          </ErrorMessage>
-          {errorMessage.lastName && (
-            <StyledErrorMessage>{errorMessage.lastName}</StyledErrorMessage>
-          )}
-        </StyledContainer>
 
-        <StyledContainer>
-          <StyledField
-            id="phone"
+          <FormInput
             name="phone"
             type="phone"
             placeholder="Phone starts with +..."
+            errors={errors}
           />
-          <ErrorMessage name="phone">
-            {(msg) => <StyledErrorMessage>{msg}</StyledErrorMessage>}
-          </ErrorMessage>
-          {errorMessage.phone && (
-            <StyledErrorMessage>{errorMessage.phone}</StyledErrorMessage>
-          )}
-        </StyledContainer>
 
-        <StyledContainer>
-          <StyledField
-            id="email"
+          <FormInput
             name="email"
             type="email"
             placeholder="Email"
+            errors={errors}
           />
-          <ErrorMessage name="email">
-            {(msg) => <StyledErrorMessage>{msg}</StyledErrorMessage>}
-          </ErrorMessage>
-          {errorMessage.email && (
-            <StyledErrorMessage>{errorMessage.email}</StyledErrorMessage>
-          )}
-        </StyledContainer>
 
-        <StyledContainer>
-          <StyledTextarea as="textarea" id="bio" name="bio" placeholder="Bio" />
-          <ErrorMessage name="bio">
-            {(msg) => <StyledErrorMessage>{msg}</StyledErrorMessage>}
-          </ErrorMessage>
-          {errorMessage.bio && (
-            <StyledErrorMessage>{errorMessage.bio}</StyledErrorMessage>
-          )}
-        </StyledContainer>
+          <StyledContainer>
+            <StyledTextarea
+              as="textarea"
+              id="bio"
+              name="bio"
+              placeholder="Bio"
+            />
+            <ErrorMessage name="bio">
+              {(msg) => <StyledErrorMessage>{msg}</StyledErrorMessage>}
+            </ErrorMessage>
+            {errors && (
+              <ServerError fieldName="bio" errors={errors}></ServerError>
+            )}
+          </StyledContainer>
 
-        <StyledWrapper>
-          <StyledFormButton type="submit">Submit</StyledFormButton>
-        </StyledWrapper>
-      </Form>
+          <StyledWrapper>
+            <StyledFormButton type="submit">Submit</StyledFormButton>
+          </StyledWrapper>
+        </Form>
+        // )
+      }
     </Formik>
   );
 };
