@@ -1,7 +1,7 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { Formik, Form, ErrorMessage } from "formik";
 import {
-  StyledField,
   StyledTextarea,
   StyledErrorMessage,
   StyledContainer,
@@ -11,9 +11,12 @@ import ServerError from "./ServerError";
 import { StyledWrapper } from "../Modal/ModalStyles";
 import validationSchema from "./ValidationSchema";
 import FormInput from "./FormInput";
+// import { addProfile } from "../../redux/actions";
+import { profilesSlice } from "../../redux/store";
 const axios = require("axios");
 
 const ModalForm = () => {
+  const dispatch = useDispatch();
   const [errors, setErrors] = useState(null);
 
   const initialValues = {
@@ -25,6 +28,7 @@ const ModalForm = () => {
   };
 
   const onSubmit = async (values, actions) => {
+    console.log(values);
     try {
       if (errors) {
         setErrors(null);
@@ -36,6 +40,7 @@ const ModalForm = () => {
       );
 
       console.log(response);
+      dispatch(profilesSlice.actions.addProfile({ ...response.data.data }));
     } catch (error) {
       setErrors(error.response.data.errors);
 
