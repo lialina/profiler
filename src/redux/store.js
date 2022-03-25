@@ -1,11 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import createSagaMiddleware from "@redux-saga/core";
-import rootSaga from "./sagas";
 import { profilesSlice } from "./profilesSlice";
+import { modalSlice } from "./modalSlice";
+
+import rootSaga from "./sagas";
 const sagaMiddleware = createSagaMiddleware();
 
 export const store = configureStore({
-  reducer: profilesSlice.reducer,
+  reducer: { profiles: profilesSlice.reducer, modal: modalSlice.reducer },
   middleware: [sagaMiddleware],
 });
 

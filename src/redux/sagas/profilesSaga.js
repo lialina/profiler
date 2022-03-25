@@ -4,6 +4,7 @@ import {
   addProfileSuccess,
   addProfileFailure,
 } from "../profilesSlice";
+import { toggleModal } from "../modalSlice";
 const axios = require("axios");
 
 export function* addNewProfile(values) {
@@ -17,6 +18,7 @@ export function* addNewProfile(values) {
     const receivedData = request.data.data;
 
     yield put(addProfileSuccess(receivedData));
+    yield put(toggleModal());
   } catch (error) {
     // console.log(error.response.data.errors);
     yield put(addProfileFailure(error.response.data.errors));
