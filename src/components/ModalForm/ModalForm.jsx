@@ -17,6 +17,7 @@ import * as profilerSelectors from "../../redux/selectors";
 const ModalForm = () => {
   const dispatch = useDispatch();
   const errors = useSelector(profilerSelectors.errors);
+  const isLoading = useSelector(profilerSelectors.isLoading);
 
   const initialValues = {
     firstName: "",
@@ -85,8 +86,9 @@ const ModalForm = () => {
           <StyledWrapper>
             <StyledFormButton type="submit">Submit</StyledFormButton>
           </StyledWrapper>
+
+          {isLoading && <p>Loading...</p>}
         </Form>
-        // )
       }
     </Formik>
   );

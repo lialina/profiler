@@ -1,9 +1,10 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import ProfileCard from "./ProfileCard";
+import * as profilerSelectors from "../../redux/selectors";
 
 const ProfilesList = () => {
-  const profiles = useSelector((state) => state.profiles);
+  const profiles = useSelector(profilerSelectors.profiles);
   return (
     <ul>
       {profiles.length > 0 &&
