@@ -1,13 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Formik, Form, ErrorMessage } from "formik";
-import {
-  StyledTextarea,
-  StyledErrorMessage,
-  StyledContainer,
-  StyledFormButton,
-} from "./StyledForm";
-import ServerError from "./ServerError";
+import { Formik, Form } from "formik";
+import { resizeNone, StyledFormButton } from "./StyledForm";
 import { StyledWrapper } from "../Modal/ModalStyles";
 import validationSchema from "./ValidationSchema";
 import FormInput from "./FormInput";
@@ -16,7 +10,6 @@ import * as profilerSelectors from "../../redux/selectors";
 
 const ModalForm = () => {
   const dispatch = useDispatch();
-  const errors = useSelector(profilerSelectors.errors);
   const isLoading = useSelector(profilerSelectors.isLoading);
 
   const initialValues = {
@@ -27,8 +20,8 @@ const ModalForm = () => {
     bio: "",
   };
 
-  const onSubmit = async (values) => {
-    dispatch(addProfileFetch(values));
+  const onSubmit = async (values, { setFieldError }) => {
+    dispatch(addProfileFetch({ values, setFieldError }));
   };
 
   return (
@@ -37,51 +30,26 @@ const ModalForm = () => {
       validationSchema={validationSchema}
       onSubmit={onSubmit}
     >
-      {/* {(formikProps) => ( */}
       {
         <Form>
-          <FormInput
-            name="firstName"
-            type="text"
-            placeholder="First Name"
-            errors={errors}
-          />
+          <FormInput name="firstName" type="text" placeholder="First Name" />
 
-          <FormInput
-            name="lastName"
-            type="text"
-            placeholder="Last Name"
-            errors={errors}
-          />
+          <FormInput name="lastName" type="text" placeholder="Last Name" />
 
           <FormInput
             name="phone"
             type="phone"
             placeholder="Phone starts with +..."
-            errors={errors}
           />
+
+          <FormInput name="email" type="email" placeholder="Email" />
 
           <FormInput
-            name="email"
-            type="email"
-            placeholder="Email"
-            errors={errors}
+            component="textarea"
+            name="bio"
+            placeholder="Bio"
+            style={resizeNone}
           />
-
-          <StyledContainer>
-            <StyledTextarea
-              as="textarea"
-              id="bio"
-              name="bio"
-              placeholder="Bio"
-            />
-            <ErrorMessage name="bio">
-              {(msg) => <StyledErrorMessage>{msg}</StyledErrorMessage>}
-            </ErrorMessage>
-            {errors && (
-              <ServerError fieldName="bio" errors={errors}></ServerError>
-            )}
-          </StyledContainer>
 
           <StyledWrapper>
             <StyledFormButton type="submit">Submit</StyledFormButton>

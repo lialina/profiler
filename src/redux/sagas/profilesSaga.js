@@ -7,12 +7,12 @@ import {
 import { toggleModal } from "../modalSlice";
 const axios = require("axios");
 
-export function* addNewProfile(values) {
+export function* addNewProfile({ payload: { values, setFieldError } }) {
   try {
     const request = yield call(
       axios.post,
       "http://localhost:3001/profiles",
-      values.payload
+      values
     );
 
     const receivedData = request.data.data;
@@ -20,8 +20,15 @@ export function* addNewProfile(values) {
     yield put(addProfileSuccess(receivedData));
     yield put(toggleModal());
   } catch (error) {
-    // console.log(error.response.data.errors);
-    yield put(addProfileFailure(error.response.data.errors));
+    yield put(addProfileFailure(error?.response?.data?.errors));
+
+    if (error?.response?.data?.errors) {
+      Object.entries(error.response.data.errors).forEach(([key, value]) => {
+        console.log("errors", error.response.data.errors);
+        console.log(`${key}`, `${value}`);
+        setFieldError(`${key}`, value);
+      });
+    }
   }
 }
 
