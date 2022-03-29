@@ -9,15 +9,8 @@ const ProfilesList = () => {
   return (
     <StyledProfilesList>
       {profiles.length > 0 &&
-        profiles.map(({ id, firstName, lastName, phone, email, bio }) => (
-          <ProfileCard
-            key={id}
-            firstName={firstName}
-            lastName={lastName}
-            phone={phone}
-            email={email}
-            bio={bio}
-          />
+        profiles.map(({ id, ...restProps }) => (
+          <ProfileCard key={id} {...restProps} />
         ))}
     </StyledProfilesList>
   );
