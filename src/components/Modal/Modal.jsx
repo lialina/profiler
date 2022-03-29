@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import StyledBackdrop from "./StyledBackdrop";
 import {
   StyledModal,
@@ -20,6 +21,10 @@ const Modal = ({ closeModal }) => {
       </StyledModal>
     </StyledBackdrop>
   );
+};
+
+Modal.propTypes = {
+  closeModal: PropTypes.func,
 };
 
 export default Modal;
