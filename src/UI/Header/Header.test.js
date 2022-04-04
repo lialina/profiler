@@ -1,22 +1,18 @@
 import React from "react";
 import { shallow } from "enzyme";
 import Header from "./Header";
+import StyledHeader from "./StyledHeader";
 
 describe("Header component", () => {
-  it("renders without crashing", () => {
-    shallow(<Header />);
-  });
-
-  // OR
   it("renders without crashing 2", () => {
     const wrapper = shallow(<Header />);
     expect(wrapper.exists()).toBeTruthy();
   });
 
-  // How? And is it needed at least?
-  // it("wrapped in StyledHeader component", () => {
-  //   const wrapper = shallow(<Header />);
-  // });
+  it("contains StyledHeader component", () => {
+    const wrapper = shallow(<Header />);
+    expect(wrapper.exists(StyledHeader)).toBe(true);
+  });
 
   it("renders Button component", () => {
     const wrapper = shallow(<Header />);
