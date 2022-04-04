@@ -4,11 +4,6 @@ import Button from "./Button";
 
 describe("Button component", () => {
   it("renders Button component without crashing", () => {
-    shallow(<Button />);
-  });
-
-  // OR
-  it("renders Button component without crashing 2", () => {
     const wrapper = shallow(<Button />);
     expect(wrapper.exists()).toBeTruthy();
   });
@@ -16,16 +11,7 @@ describe("Button component", () => {
   it("accepts props", () => {
     const openModalMock = jest.fn();
     const props = { type: "button", onClick: openModalMock() };
-    const wrapper = mount(<Button data={props} />);
-
-    expect(wrapper.props().data).toEqual(props);
-  });
-
-  // OR
-  it("accepts props 2", () => {
-    const openModalMock = jest.fn();
-    const props = { type: "button", onClick: openModalMock() };
-    const wrapper = mount(<Button type={props.type} onClick={props.onClick} />);
+    const wrapper = mount(<Button {...props} />);
 
     expect(wrapper.props().type).toEqual(props.type);
     expect(wrapper.props().onClick).toEqual(props.onClick);
