@@ -1,14 +1,9 @@
 import React from "react";
-import { shallow, mount } from "enzyme";
+import { shallow } from "enzyme";
 import Modal from "./Modal";
 
 describe("Modal component", () => {
-  it("renders Modal component without crashing", () => {
-    shallow(<Modal />);
-  });
-
-  // OR
-  it("renders Modal component without crashing 2", () => {
+  it("renders without crashing", () => {
     const ModalComponent = shallow(<Modal />);
     expect(ModalComponent.exists()).toBeTruthy();
   });
