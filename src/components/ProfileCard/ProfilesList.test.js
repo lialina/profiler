@@ -16,14 +16,8 @@ describe("ProfilesList component", () => {
 
   const useSelectorMock = jest.spyOn(redux, "useSelector");
 
-  it("renders ProfilesList component without crashing", () => {
-    useSelectorMock.mockReturnValue({ profiles: profilesMock });
-    shallow(<ProfilesList />);
-  });
-
-  // OR
-  it("renders ProfilesList component without crashing 2", () => {
-    useSelectorMock.mockReturnValue({ profiles: profilesMock });
+  it("renders without crashing", () => {
+    useSelectorMock.mockReturnValue(profilesMock);
     const wrapper = shallow(<ProfilesList />);
     expect(wrapper.exists()).toBeTruthy();
   });
