@@ -7,7 +7,7 @@ import {
 import { toggleModal } from "../modalSlice";
 const axios = require("axios");
 
-export function* addNewProfile({ payload: { values, setFieldError } }) {
+export function* addNewProfileSaga({ payload: { values, setFieldError } }) {
   try {
     const request = yield call(
       axios.post,
@@ -24,16 +24,14 @@ export function* addNewProfile({ payload: { values, setFieldError } }) {
 
     if (error?.response?.data?.errors) {
       Object.entries(error.response.data.errors).forEach(([key, value]) => {
-        console.log("errors", error.response.data.errors);
-        console.log(`${key}`, `${value}`);
         setFieldError(`${key}`, value);
       });
     }
   }
 }
 
-function* profilesSaga() {
-  yield takeEvery(addProfileFetch, addNewProfile);
+function* profilesWatcher() {
+  yield takeEvery(addProfileFetch, addNewProfileSaga);
 }
 
-export { profilesSaga };
+export { profilesWatcher };

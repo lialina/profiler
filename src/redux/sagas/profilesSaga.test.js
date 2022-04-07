@@ -1,48 +1,32 @@
 import { testSaga } from "redux-saga-test-plan";
-// import { call, put, take } from "redux-saga/effects";
 import axios from "axios";
-import { takeEvery } from "redux-saga/effects";
-import {
-  addProfileFetch,
-  addProfileSuccess,
-  addProfileFailure,
-} from "../profilesSlice";
+import { addProfileSuccess, addProfileFailure } from "../profilesSlice";
 
 import { toggleModal } from "../modalSlice";
-import { addNewProfile, profilesSaga } from "../sagas/profilesSaga";
+import { addNewProfileSaga } from "../sagas/profilesSaga";
 
-describe("profilesSaga", () => {
-  const genObject = profilesSaga();
+describe("addNewProfileSaga", () => {
+  const testProfile = {
+    firstName: "Anna",
+    lastName: "Jons",
+    phone: "+80302525789",
+    email: "anna.jons@gmail.com",
+    bio: "Developer",
+  };
 
-  it("should wait for every addProfileFetch action and call addNewProfile", () => {
-    expect(genObject.next().value).toEqual(
-      takeEvery(addProfileFetch, addNewProfile)
-    );
-  });
-
-  it("should be done on next iteration", () => {
-    expect(genObject.next().done).toBeTruthy();
-  });
+  const args = {
+    payload: { values: testProfile, setFieldError: jest.fn() },
+  };
 
   it("works with unit tests", () => {
-    const dummyProfile = {
-      firstName: "Anna",
-      lastName: "Jons",
-      phone: "+80302525789",
-      email: "anna.jons@gmail.com",
-      bio: "Developer",
-    };
-    const mockReceivedData = { ...dummyProfile, id: "1" };
+    const mockReceivedData = { ...testProfile, id: "1" };
 
-    const args = {
-      payload: { values: dummyProfile, setFieldError: jest.fn() },
-    };
-
-    testSaga(addNewProfile, args)
+    let saga = testSaga(addNewProfileSaga, args);
+    saga
       .next()
-      .call(axios.post, "http://localhost:3001/profiles", dummyProfile)
+      .call(axios.post, "http://localhost:3001/profiles", testProfile)
 
-      .next()
+      .next({ data: { data: mockReceivedData } })
       .put(addProfileSuccess(mockReceivedData))
 
       .next()
@@ -52,48 +36,35 @@ describe("profilesSaga", () => {
       .isDone();
   });
 
-  // it("should call axios post and dispatch success action", async () => {
-  //   const dummyProfile = {
-  //     firstName: "Anna",
-  //     lastName: "Jons",
-  //     phone: "+80302525789",
-  //     email: "anna.jons@gmail.com",
-  //     bio: "Developer",
+  it("should catch error", () => {
+    const mockError = {
+      response: { data: { errors: { firstName: "Some error" } } },
+    };
+    let saga = testSaga(addNewProfileSaga, args);
+    saga
+      .next()
+      .throw(mockError)
+      .put(addProfileFailure(mockError.response.data.errors))
+      .next(true)
+      .isDone()
+
+      .back(2)
+      .next(false)
+      .next()
+      .isDone();
+  });
+
+  // it("fail in if checking", () => {
+  //   const mockError = {
+  //     response: { data: { errors: { firstName: "Some error" } } },
   //   };
-  //   const dummySetFieldError = jest.fn();
-  //   const postProfiles = jest
-  //     .spyOn(axios, "post")
-  //     .mockImplementation(() => Promise.resolve(dummyProfile));
+  //   let saga = testSaga(addNewProfileSaga, args);
+  //   saga
+  //     .next()
+  //     .throw(mockError)
 
-  //   const mockPayload = { payload: dummyProfile };
-  //   const dispatched = [];
-  //   const result = await runSaga(
-  //     {
-  //       dispatch: (action) => dispatched.push(action),
-  //     },
-  //     addNewProfile,
-  //     mockPayload
-  //   );
-
-  //   expect(postProfiles).toHaveBeenCalledTimes(1);
-  //   expect(dispatched).toEqual([addProfileSuccess(dummyProfile)]);
-  //   postProfiles.mockClear();
+  //     .put(addProfileFailure(mockError.response.data.errors))
+  //     .next(false)
+  //     .isDone();
   // });
 });
-
-// it("should call api and dispatch error action", async () => {
-//   const postProfiles = jest
-//     .spyOn(axios, "post")
-//     .mockImplementation(() => Promise.reject());
-//   const dispatched = [];
-//   const result = await runSaga(
-//     {
-//       dispatch: (action) => dispatched.push(action),
-//     },
-//     addNewProfile
-//   );
-
-//   expect(postProfiles).toHaveBeenCalledTimes(1);
-//   expect(dispatched).toEqual([addProfileFailure()]);
-//   postProfiles.mockClear();
-// });
