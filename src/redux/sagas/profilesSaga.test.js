@@ -1,7 +1,6 @@
 import { testSaga } from "redux-saga-test-plan";
 import axios from "axios";
 import { addProfileSuccess, addProfileFailure } from "../profilesSlice";
-
 import { toggleModal } from "../modalSlice";
 import { addNewProfileSaga } from "../sagas/profilesSaga";
 
@@ -18,7 +17,7 @@ describe("addNewProfileSaga", () => {
     payload: { values: testProfile, setFieldError: jest.fn() },
   };
 
-  it("works with unit tests", () => {
+  it("puts addProfileSuccess if resolved", () => {
     const mockReceivedData = { ...testProfile, id: "1" };
 
     let saga = testSaga(addNewProfileSaga, args);
@@ -36,7 +35,7 @@ describe("addNewProfileSaga", () => {
       .isDone();
   });
 
-  it("should catch error", () => {
+  it("should catch error and puts addProfileFailure", () => {
     const mockError = {
       response: { data: { errors: { firstName: "Some error" } } },
     };
@@ -53,18 +52,4 @@ describe("addNewProfileSaga", () => {
       .next()
       .isDone();
   });
-
-  // it("fail in if checking", () => {
-  //   const mockError = {
-  //     response: { data: { errors: { firstName: "Some error" } } },
-  //   };
-  //   let saga = testSaga(addNewProfileSaga, args);
-  //   saga
-  //     .next()
-  //     .throw(mockError)
-
-  //     .put(addProfileFailure(mockError.response.data.errors))
-  //     .next(false)
-  //     .isDone();
-  // });
 });
