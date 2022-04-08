@@ -13,11 +13,6 @@ describe("ProfileCard component", () => {
   };
 
   it("renders without crashing", () => {
-    shallow(<ProfileCard />);
-  });
-
-  // OR
-  it("renders without crashing 2", () => {
     const wrapper = shallow(<ProfileCard />);
     expect(wrapper.exists()).toBeTruthy();
   });
