@@ -1,18 +1,22 @@
-import React from "react";
 import * as redux from "react-redux";
-import configureStore from "redux-mock-store";
 import { shallow, mount } from "enzyme";
 import ModalForm from "./ModalForm";
-// import { store } from "../../redux/store";
+import { Formik } from "formik";
 import { addProfileFetch } from "../../redux/profilesSlice";
 
-const mockStore = configureStore();
-const store = mockStore();
+const mockPayload = {
+  values: {
+    firstName: "Anna",
+    lastName: "Jons",
+    phone: "+80302525789",
+    email: "anna.jons@gmail.com",
+    bio: "Developer",
+  },
+  setFieldError: jest.fn(),
+};
 
 describe("ModalForm component", () => {
   const useDispatchMock = jest.spyOn(redux, "useDispatch");
-  useDispatchMock.mockReturnValue(jest.fn());
-
   const useSelectorMock = jest.spyOn(redux, "useSelector");
 
   it("renders without crashing", () => {
@@ -27,35 +31,16 @@ describe("ModalForm component", () => {
     expect(text).toBe("Loading...");
   });
 
-  it("dispatch", async () => {
-    const mockPayload = {
-      values: {
-        firstName: "Anna",
-        lastName: "Jons",
-        phone: "+80302525789",
-        email: "anna.jons@gmail.com",
-        bio: "Developer",
-      },
-      setFieldError: jest.fn(),
-    };
+  it("dispatch in case of form submitting", () => {
+    const mockedDispatch = jest.fn();
+    useSelectorMock.mockReturnValueOnce(false);
+    useDispatchMock.mockReturnValue(mockedDispatch);
 
-    const expectedActions = [
-      {
-        payload: mockPayload,
-        type: "profiles/addProfileFetch",
-      },
-    ];
-    store.dispatch(addProfileFetch(mockPayload));
-    const actions = store.getActions();
-    console.log(actions);
-    expect(actions).toEqual(expectedActions);
+    const wrapper = mount(<ModalForm />);
+    wrapper.find(Formik).props().onSubmit(mockPayload.values, {
+      setFieldError: mockPayload.setFieldError,
+    });
 
-    // const expectedActions = {
-    //   payload: mockPayload,
-    //   type: "profiles/addProfileFetch",
-    // };
-    // expect(store.dispatch(addProfileFetch(mockPayload))).toEqual(
-    //   expectedActions
-    // );
+    expect(mockedDispatch).toHaveBeenCalledWith(addProfileFetch(mockPayload));
   });
 });
