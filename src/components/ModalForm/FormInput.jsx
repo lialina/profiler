@@ -7,14 +7,7 @@ const FormInput = ({ name, errors, ...restProps }) => {
   return (
     <StyledContainer>
       <StyledField id={name} name={name} {...restProps} />
-      {/* <ErrorMessage name={name}>
-        {(msg) => <StyledErrorMessage>{msg}</StyledErrorMessage>}
-      </ErrorMessage> */}
       <ErrorMessage name={name} component={StyledErrorMessage} />
-      {/* <ErrorMessage
-        name={name}
-        render={(msg) => <StyledErrorMessage>{msg}</StyledErrorMessage>}
-      /> */}
     </StyledContainer>
   );
 };
