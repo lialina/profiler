@@ -20,7 +20,9 @@ describe("FormInput component", () => {
     name: "firstName",
     type: "text",
     placeholder: "First Name",
-    errors: "Some error",
+    errors: {
+      firstName: "Some error",
+    },
   };
 
   const wrapper = mount(
@@ -28,8 +30,27 @@ describe("FormInput component", () => {
       <FormInput {...props} />
     </Formik>
   );
+  console.log(wrapper.debug());
 
   it("accepts props", () => {
     expect(wrapper.find(FormInput).props().name).toEqual(props.name);
+  });
+
+  it("renders StyledErrorMessage in ErrorMessage if error", () => {
+    const props = {
+      name: "firstName",
+      error: "Some error",
+      component: StyledErrorMessage,
+    };
+
+    const wrapper = mount(
+      <Formik>
+        <ErrorMessage {...props} />
+      </Formik>
+    );
+
+    expect(wrapper.find(ErrorMessage).props().component).toEqual(
+      props.component
+    );
   });
 });
