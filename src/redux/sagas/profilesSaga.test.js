@@ -1,7 +1,7 @@
 import { testSaga } from "redux-saga-test-plan";
 import axios from "axios";
 import { addProfileSuccess, addProfileFailure } from "../profilesSlice";
-import { toggleModal } from "../modalSlice";
+import { closeModal } from "../modalSlice";
 import { addNewProfileSaga } from "../sagas/profilesSaga";
 
 describe("addNewProfileSaga", () => {
@@ -29,7 +29,7 @@ describe("addNewProfileSaga", () => {
       .put(addProfileSuccess(mockReceivedData))
 
       .next()
-      .put(toggleModal())
+      .put(closeModal())
 
       .next()
       .isDone();

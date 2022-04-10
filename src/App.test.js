@@ -5,7 +5,7 @@ import App from "./App";
 import Modal from "./components/Modal/Modal";
 import Button from "../src/components/Button/Button";
 import ProfilesList from "./components/ProfileCard/ProfilesList";
-import { toggleModal } from "./redux/modalSlice";
+import { openModal, closeModal } from "./redux/modalSlice";
 import { ModalButton } from "../src/components/Modal/ModalStyles";
 
 describe("App component", () => {
@@ -38,7 +38,7 @@ describe("App component", () => {
     const button = wrapper.find(Button);
     button.simulate("click");
 
-    expect(mockedDispatch).toHaveBeenCalledWith(toggleModal());
+    expect(mockedDispatch).toHaveBeenCalledWith(openModal());
   });
 
   it("closeModal with onClick on ModalButton", () => {
@@ -50,6 +50,6 @@ describe("App component", () => {
     const button = wrapper.find(ModalButton);
     button.simulate("click");
 
-    expect(mockedDispatch).toHaveBeenCalledWith(toggleModal());
+    expect(mockedDispatch).toHaveBeenCalledWith(closeModal());
   });
 });

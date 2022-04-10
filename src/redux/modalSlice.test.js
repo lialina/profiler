@@ -1,4 +1,4 @@
-import { modalSlice, toggleModal } from "./modalSlice";
+import { modalSlice, openModal, closeModal } from "./modalSlice";
 
 describe("modalSlice", () => {
   it("should return the initial state", () => {
@@ -7,10 +7,17 @@ describe("modalSlice", () => {
     });
   });
 
-  it("should handle a toggleModal action", () => {
+  it("should handle a openModal action", () => {
     const previousState = { isModalVisible: false };
-    expect(modalSlice.reducer(previousState, toggleModal(true))).toEqual({
+    expect(modalSlice.reducer(previousState, openModal(true))).toEqual({
       isModalVisible: true,
+    });
+  });
+
+  it("should handle a closeModal action", () => {
+    const previousState = { isModalVisible: true };
+    expect(modalSlice.reducer(previousState, closeModal(false))).toEqual({
+      isModalVisible: false,
     });
   });
 });
