@@ -4,19 +4,16 @@ import Header from "./UI/Header/Header";
 import Modal from "./components/Modal/Modal";
 import ProfilesList from "./components/ProfileCard/ProfilesList";
 import { isModalVisibleSelector } from "../src/redux/selectors";
-import { toggleModal } from "./redux/modalSlice";
+import { openModal, closeModal } from "./redux/modalSlice";
+
 const App = () => {
   const dispatch = useDispatch();
   const isModalVisible = useSelector(isModalVisibleSelector);
 
-  const modalToggleHandler = () => {
-    dispatch(toggleModal());
-  };
-
   return (
     <div>
-      <Header openModal={modalToggleHandler} />
-      {isModalVisible && <Modal closeModal={modalToggleHandler} />}
+      <Header openModal={() => dispatch(openModal())} />
+      {isModalVisible && <Modal closeModal={() => dispatch(closeModal())} />}
       {!isModalVisible && <ProfilesList />}
     </div>
   );

@@ -6,10 +6,13 @@ export const modalSlice = createSlice({
     isModalVisible: false,
   },
   reducers: {
-    toggleModal: (state) => {
-      state.isModalVisible = !state.isModalVisible;
+    openModal: (state) => {
+      state.isModalVisible = true;
+    },
+    closeModal: (state) => {
+      state.isModalVisible = false;
     },
   },
 });
 
-export const { toggleModal } = modalSlice.actions;
+export const { openModal, closeModal } = modalSlice.actions;

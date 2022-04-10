@@ -4,7 +4,7 @@ import {
   addProfileSuccess,
   addProfileFailure,
 } from "../profilesSlice";
-import { toggleModal } from "../modalSlice";
+import { closeModal } from "../modalSlice";
 const axios = require("axios");
 
 export function* addNewProfileSaga({ payload: { values, setFieldError } }) {
@@ -18,7 +18,7 @@ export function* addNewProfileSaga({ payload: { values, setFieldError } }) {
     const receivedData = request.data.data;
 
     yield put(addProfileSuccess(receivedData));
-    yield put(toggleModal());
+    yield put(closeModal());
   } catch (error) {
     yield put(addProfileFailure(error?.response?.data?.errors));
 
