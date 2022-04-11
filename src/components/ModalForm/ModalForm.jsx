@@ -6,11 +6,11 @@ import { StyledWrapper } from "../Modal/ModalStyles";
 import validationSchema from "./ValidationSchema";
 import FormInput from "./FormInput";
 import { addProfileFetch } from "../../redux/profilesSlice";
-import * as profilerSelectors from "../../redux/selectors";
+import { isLoadingSelector } from "../../redux/selectors";
 
 const ModalForm = () => {
   const dispatch = useDispatch();
-  const isLoading = useSelector(profilerSelectors.isLoading);
+  const isLoading = useSelector(isLoadingSelector);
 
   const initialValues = {
     firstName: "",

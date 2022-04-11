@@ -4,10 +4,10 @@ import {
   addProfileSuccess,
   addProfileFailure,
 } from "../profilesSlice";
-import { toggleModal } from "../modalSlice";
+import { closeModal } from "../modalSlice";
 const axios = require("axios");
 
-export function* addNewProfile({ payload: { values, setFieldError } }) {
+export function* addNewProfileSaga({ payload: { values, setFieldError } }) {
   try {
     const request = yield call(
       axios.post,
@@ -18,22 +18,20 @@ export function* addNewProfile({ payload: { values, setFieldError } }) {
     const receivedData = request.data.data;
 
     yield put(addProfileSuccess(receivedData));
-    yield put(toggleModal());
+    yield put(closeModal());
   } catch (error) {
     yield put(addProfileFailure(error?.response?.data?.errors));
 
     if (error?.response?.data?.errors) {
       Object.entries(error.response.data.errors).forEach(([key, value]) => {
-        console.log("errors", error.response.data.errors);
-        console.log(`${key}`, `${value}`);
         setFieldError(`${key}`, value);
       });
     }
   }
 }
 
-function* profilesSaga() {
-  yield takeEvery(addProfileFetch, addNewProfile);
+function* profilesWatcher() {
+  yield takeEvery(addProfileFetch, addNewProfileSaga);
 }
 
-export { profilesSaga };
+export { profilesWatcher };

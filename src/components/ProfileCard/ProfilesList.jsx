@@ -2,10 +2,10 @@ import React from "react";
 import { useSelector } from "react-redux";
 import ProfileCard from "./ProfileCard";
 import { StyledProfilesList } from "./ProfileStyles";
-import * as profilerSelectors from "../../redux/selectors";
+import { profilesSelector } from "../../redux/selectors";
 
 const ProfilesList = () => {
-  const profiles = useSelector(profilerSelectors.profiles);
+  const profiles = useSelector(profilesSelector);
   return (
     <StyledProfilesList>
       {profiles.length > 0 &&
