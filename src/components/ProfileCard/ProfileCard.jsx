@@ -1,15 +1,21 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { StyledProfileItem } from "./ProfileStyles";
+import { StyledProfileItem, StyledProfileInfo } from "./ProfileStyles";
+import StyledButton from "../Button/StyledButton";
+import { ModalButton } from "../Modal/ModalStyles";
 
 const ProfilesCard = ({ id, firstName, lastName, phone, email, bio }) => {
   return (
     <StyledProfileItem key={id}>
-      <p>{firstName}</p>
-      <p>{lastName}</p>
-      <p>{email}</p>
-      <p>{phone}</p>
-      <p>{bio}</p>
+      <StyledProfileInfo>
+        <p>{firstName}</p>
+        <p>{lastName}</p>
+        <p>{email}</p>
+        <p>{phone}</p>
+        <p>{bio}</p>
+      </StyledProfileInfo>
+      <StyledButton>Edit info</StyledButton>
+      <ModalButton>Delete</ModalButton>
     </StyledProfileItem>
   );
 };
