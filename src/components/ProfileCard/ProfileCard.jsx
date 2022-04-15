@@ -1,10 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { useDispatch } from "react-redux";
 import { StyledProfileItem, StyledProfileInfo } from "./ProfileStyles";
 import StyledButton from "../Button/StyledButton";
 import { ModalButton } from "../Modal/ModalStyles";
+import { deleteProfileFetch } from "../../redux/profilesSlice";
 
 const ProfilesCard = ({ id, firstName, lastName, phone, email, bio }) => {
+  const dispatch = useDispatch();
+
   return (
     <StyledProfileItem key={id}>
       <StyledProfileInfo>
@@ -15,7 +19,12 @@ const ProfilesCard = ({ id, firstName, lastName, phone, email, bio }) => {
         <p>{bio}</p>
       </StyledProfileInfo>
       <StyledButton>Edit info</StyledButton>
-      <ModalButton>Delete</ModalButton>
+      <ModalButton
+        type="button"
+        onClick={() => dispatch(deleteProfileFetch(id))}
+      >
+        Delete
+      </ModalButton>
     </StyledProfileItem>
   );
 };

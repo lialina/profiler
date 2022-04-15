@@ -20,8 +20,15 @@ export const profilesSlice = createSlice({
       state.isLoading = false;
       state.errors = action.payload;
     },
+    deleteProfileFetch: (state) => {
+      console.log("Delete is working");
+    },
   },
 });
 
-export const { addProfileFetch, addProfileSuccess, addProfileFailure } =
-  profilesSlice.actions;
+export const {
+  addProfileFetch,
+  addProfileSuccess,
+  addProfileFailure,
+  deleteProfileFetch,
+} = profilesSlice.actions;
