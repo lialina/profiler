@@ -28,4 +28,12 @@ const StyledProfileItem = styled.li`
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
 `;
 
-export { StyledProfilesList, StyledProfileItem };
+const StyledProfileInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  margin-bottom: 10px;
+`;
+
+export { StyledProfilesList, StyledProfileItem, StyledProfileInfo };
