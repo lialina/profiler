@@ -21,7 +21,16 @@ export const profilesSlice = createSlice({
       state.errors = action.payload;
     },
     deleteProfileFetch: (state) => {
-      console.log("Delete is working");
+      console.log("deleteProfileFetch is working");
+    },
+    deleteProfileSuccess: (state) => {
+      state.profiles = [];
+    },
+    getProfilesFetch: (state) => {
+      console.log("getProfilesFetch is working");
+    },
+    getProfilesSuccess: (state, { payload }) => {
+      state.profiles = [...payload];
     },
   },
 });
@@ -31,4 +40,7 @@ export const {
   addProfileSuccess,
   addProfileFailure,
   deleteProfileFetch,
+  deleteProfileSuccess,
+  getProfilesFetch,
+  getProfilesSuccess,
 } = profilesSlice.actions;
