@@ -6,12 +6,11 @@ import { profilesSelector } from "../../redux/selectors";
 
 const ProfilesList = () => {
   const profiles = useSelector(profilesSelector);
+
   return (
     <StyledProfilesList>
       {profiles.length > 0 &&
-        profiles.map(({ id, ...restProps }) => (
-          <ProfileCard key={id} {...restProps} />
-        ))}
+        profiles.map((props) => <ProfileCard key={props.id} {...props} />)}
     </StyledProfilesList>
   );
 };
