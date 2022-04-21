@@ -24,7 +24,24 @@ let profiles = [];
 app
   .get("/profiles", async (req, res, next) => {
     try {
-      res.json({ status: "success", code: 200, data: { profiles } });
+      res.json({ status: "success", code: 200, data: profiles });
+    } catch (error) {
+      next(error);
+    }
+  })
+
+  .get("/profiles/:id", async (req, res, next) => {
+    try {
+      const requestedProfile = profiles.find(
+        (profile) => profile.id === req.params.id
+      );
+      if (requestedProfile) {
+        res.json({ status: "success", code: 200, data: requestedProfile });
+      } else {
+        res
+          .status(404)
+          .json({ status: "error", code: 404, message: "Not found" });
+      }
     } catch (error) {
       next(error);
     }
@@ -68,6 +85,17 @@ app
       profiles.push(data);
 
       res.status(201).json({ status: "success", code: 201, data });
+    } catch (error) {
+      next(error);
+    }
+  })
+
+  .delete("/profiles/:id", async (req, res, next) => {
+    try {
+      if (profiles.some((profile) => profile.id === req.params.id)) {
+        profiles = profiles.filter((profile) => profile.id !== req.params.id);
+        res.json({ status: "success", code: 200 });
+      }
     } catch (error) {
       next(error);
     }
