@@ -13,13 +13,13 @@ const axios = require("axios");
 
 export function* addNewProfileSaga({ payload: { values, setFieldError } }) {
   try {
-    const request = yield call(
+    const response = yield call(
       axios.post,
       "http://localhost:3001/profiles",
       values
     );
 
-    const receivedData = request.data.data;
+    const receivedData = response.data.data;
 
     yield put(addProfileSuccess(receivedData));
     yield put(closeModal());
@@ -36,8 +36,8 @@ export function* addNewProfileSaga({ payload: { values, setFieldError } }) {
 
 export function* getProfilesSaga() {
   try {
-    const request = yield call(axios.get, "http://localhost:3001/profiles");
-    const receivedData = request.data.data;
+    const response = yield call(axios.get, "http://localhost:3001/profiles");
+    const receivedData = response.data.data;
 
     yield put(getProfilesSuccess(receivedData));
   } catch (error) {
@@ -47,15 +47,13 @@ export function* getProfilesSaga() {
 
 export function* deleteProfileSaga({ payload: id }) {
   try {
-    const request = yield call(
+    const response = yield call(
       axios.delete,
       `http://localhost:3001/profiles/${id}`
     );
 
-    if (request.data.status === "success") {
-      yield put(deleteProfileSuccess());
-      yield put(getProfilesFetch());
-    }
+    yield put(deleteProfileSuccess());
+    yield put(getProfilesFetch());
   } catch (error) {
     console.log("error: ", error);
   }
