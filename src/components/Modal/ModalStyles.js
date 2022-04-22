@@ -6,7 +6,7 @@ const StyledModal = styled.div`
   width: 100%;
   max-width: 350px;
   margin: auto;
-  padding: 30px 0px 25px;
+  padding: 30px 20px 25px;
 
   background-color: #ffffff;
   box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.12), 0px 1px 1px rgba(0, 0, 0, 0.14),
@@ -27,7 +27,7 @@ const StyledWrapper = styled.div`
   align-items: center;
 `;
 
-const ModalButton = styled(StyledButton)`
+const StyledModalButton = styled(StyledButton)`
   font-size: 12px;
   margin-top: 10px;
   border: 1px solid #a0a1a3;
@@ -41,4 +41,15 @@ const ModalButton = styled(StyledButton)`
   }
 `;
 
-export { StyledModal, StyledHeader, StyledWrapper, ModalButton };
+const StyledText = styled.p`
+  text-align: center;
+  margin-bottom: 16px;
+`;
+
+export {
+  StyledModal,
+  StyledHeader,
+  StyledWrapper,
+  StyledModalButton,
+  StyledText,
+};

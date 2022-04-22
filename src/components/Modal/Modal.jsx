@@ -5,7 +5,7 @@ import {
   StyledModal,
   StyledHeader,
   StyledWrapper,
-  ModalButton,
+  StyledModalButton,
 } from "./ModalStyles";
 import ModalForm from "../ModalForm/ModalForm";
 
@@ -16,7 +16,7 @@ const Modal = ({ closeModal }) => {
         <StyledHeader>Enter your information</StyledHeader>
         <StyledWrapper>
           <ModalForm />
-          <ModalButton onClick={closeModal}>Cancel</ModalButton>
+          <StyledModalButton onClick={closeModal}>Cancel</StyledModalButton>
         </StyledWrapper>
       </StyledModal>
     </StyledBackdrop>
