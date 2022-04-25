@@ -35,6 +35,7 @@ app
       const requestedProfile = profiles.find(
         (profile) => profile.id === req.params.id
       );
+
       if (requestedProfile) {
         res.json({ status: "success", code: 200, data: requestedProfile });
       } else {
@@ -85,6 +86,18 @@ app
       profiles.push(data);
 
       res.status(201).json({ status: "success", code: 201, data });
+    } catch (error) {
+      next(error);
+    }
+  })
+
+  .put("/profiles/:id", async (req, res, next) => {
+    try {
+      profiles = profiles.map((profile) =>
+        profile.id === req.params.id ? req.body : profile
+      );
+
+      res.json({ status: "success", code: 200 });
     } catch (error) {
       next(error);
     }
