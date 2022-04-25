@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import StyledBackdrop from "../Modal/StyledBackdrop";
 import StyledButton from "../Button/StyledButton";
@@ -31,6 +32,12 @@ const ConfirmWindow = ({ id, text, onShow }) => {
       </StyledModal>
     </StyledBackdrop>
   );
+};
+
+ConfirmWindow.propTypes = {
+  id: PropTypes.string,
+  text: PropTypes.string,
+  onShow: PropTypes.func,
 };
 
 export default ConfirmWindow;
