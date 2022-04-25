@@ -7,9 +7,20 @@ import {
   deleteProfileSuccess,
   getProfilesFetch,
   getProfilesSuccess,
+  editProfileFetch,
+  editProfileSuccess,
+  editProfileFailure,
 } from "../profilesSlice";
-import { closeModal } from "../modalSlice";
+import { closeModal, closeEditModal } from "../modalSlice";
 const axios = require("axios");
+
+const setFieldErrorsService = (error, setFieldError) => {
+  if (error?.response?.data?.errors) {
+    Object.entries(error.response.data.errors).forEach(([key, value]) => {
+      setFieldError(`${key}`, value);
+    });
+  }
+};
 
 export function* addNewProfileSaga({ payload: { values, setFieldError } }) {
   try {
@@ -26,11 +37,7 @@ export function* addNewProfileSaga({ payload: { values, setFieldError } }) {
   } catch (error) {
     yield put(addProfileFailure(error?.response?.data?.errors));
 
-    if (error?.response?.data?.errors) {
-      Object.entries(error.response.data.errors).forEach(([key, value]) => {
-        setFieldError(`${key}`, value);
-      });
-    }
+    setFieldErrorsService();
   }
 }
 
@@ -42,6 +49,25 @@ export function* getProfilesSaga() {
     yield put(getProfilesSuccess(receivedData));
   } catch (error) {
     console.log("error: ", error);
+  }
+}
+
+export function* editProfileSaga({ payload: { values, setFieldError, id } }) {
+  try {
+    const response = yield call(
+      axios.put,
+      `http://localhost:3001/profiles/${id}`,
+      { ...values, id }
+    );
+
+    yield put(editProfileSuccess());
+    yield put(closeEditModal());
+    yield put(getProfilesFetch());
+  } catch (error) {
+    console.log("error: ", error);
+    yield put(editProfileFailure(error?.response?.data?.errors));
+
+    setFieldErrorsService();
   }
 }
 
@@ -63,6 +89,7 @@ function* profilesWatcher() {
   yield takeEvery(addProfileFetch, addNewProfileSaga);
   yield takeEvery(deleteProfileFetch, deleteProfileSaga);
   yield takeEvery(getProfilesFetch, getProfilesSaga);
+  yield takeEvery(editProfileFetch, editProfileSaga);
 }
 
 export { profilesWatcher };
