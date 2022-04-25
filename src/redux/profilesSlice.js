@@ -32,6 +32,19 @@ export const profilesSlice = createSlice({
     getProfilesSuccess: (state, { payload }) => {
       state.profiles = [...payload];
     },
+    editProfileFetch: (state) => {
+      console.log("editProfileFetch is working");
+      state.isLoading = true;
+      state.errors = null;
+    },
+    editProfileSuccess: (state) => {
+      console.log("editProfileSuccess is working");
+      state.isLoading = false;
+    },
+    editProfileFailure: (state, action) => {
+      state.isLoading = false;
+      state.errors = action.payload;
+    },
   },
 });
 
@@ -43,4 +56,7 @@ export const {
   deleteProfileSuccess,
   getProfilesFetch,
   getProfilesSuccess,
+  editProfileFetch,
+  editProfileSuccess,
+  editProfileFailure,
 } = profilesSlice.actions;
