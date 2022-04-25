@@ -3,19 +3,18 @@ import PropTypes from "prop-types";
 import StyledBackdrop from "./StyledBackdrop";
 import {
   StyledModal,
-  StyledHeader,
+  StyledTitle,
   StyledWrapper,
   StyledModalButton,
 } from "./ModalStyles";
-import ModalForm from "../ModalForm/ModalForm";
 
-const Modal = ({ closeModal }) => {
+const Modal = ({ closeModal, header, children }) => {
   return (
     <StyledBackdrop>
       <StyledModal>
-        <StyledHeader>Enter your information</StyledHeader>
+        <StyledTitle children={header} />
         <StyledWrapper>
-          <ModalForm />
+          {children}
           <StyledModalButton onClick={closeModal}>Cancel</StyledModalButton>
         </StyledWrapper>
       </StyledModal>
@@ -25,6 +24,8 @@ const Modal = ({ closeModal }) => {
 
 Modal.propTypes = {
   closeModal: PropTypes.func,
+  header: PropTypes.string,
+  children: PropTypes.node,
 };
 
 export default Modal;

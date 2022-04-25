@@ -14,7 +14,7 @@ const StyledModal = styled.div`
   border-radius: 4px;
 `;
 
-const StyledHeader = styled.h2`
+const StyledTitle = styled.h2`
   font-size: 20px;
   text-align: center;
   margin-bottom: 28px;
@@ -48,7 +48,7 @@ const StyledText = styled.p`
 
 export {
   StyledModal,
-  StyledHeader,
+  StyledTitle,
   StyledWrapper,
   StyledModalButton,
   StyledText,
