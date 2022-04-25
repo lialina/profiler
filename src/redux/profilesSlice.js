@@ -24,7 +24,7 @@ export const profilesSlice = createSlice({
       console.log("deleteProfileFetch is working");
     },
     deleteProfileSuccess: (state) => {
-      state.profiles = [];
+      console.log("deleteProfileSuccess is working");
     },
     getProfilesFetch: (state) => {
       console.log("getProfilesFetch is working");
