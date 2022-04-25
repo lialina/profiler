@@ -5,8 +5,15 @@ import { StyledProfileItem, StyledProfileInfo } from "./ProfileStyles";
 import StyledButton from "../Button/StyledButton";
 import { StyledModalButton } from "../Modal/ModalStyles";
 import ConfirmWindow from "../ConfirmWindow/ConfirmWindow";
+import Modal from "../Modal/Modal";
+import ModalForm from "../ModalForm/ModalForm";
+import { useDispatch, useSelector } from "react-redux";
+import { isEditModalVisibleSelector } from "../../redux/selectors";
+import { openEditModal, closeEditModal } from "../../redux/modalSlice";
 
 const ProfilesCard = ({ id, firstName, lastName, phone, email, bio }) => {
+  const dispatch = useDispatch();
+  const isEditModalVisible = useSelector(isEditModalVisibleSelector);
   const [openConfirmWindow, setOpenConfirmWindow] = useState(false);
 
   const handleOpenConfirmWindow = () => {
@@ -15,22 +22,42 @@ const ProfilesCard = ({ id, firstName, lastName, phone, email, bio }) => {
 
   return (
     <>
-      <StyledProfileItem key={id}>
-        <StyledProfileInfo>
-          <p>{firstName}</p>
-          <p>{lastName}</p>
-          <p>{email}</p>
-          <p>{phone}</p>
-          <p>{bio}</p>
-        </StyledProfileInfo>
-        <StyledButton type="button">Edit info</StyledButton>
-        <StyledModalButton
-          type="button"
-          onClick={() => handleOpenConfirmWindow()}
+      {!isEditModalVisible ? (
+        <StyledProfileItem key={id}>
+          <StyledProfileInfo>
+            <p>{firstName}</p>
+            <p>{lastName}</p>
+            <p>{email}</p>
+            <p>{phone}</p>
+            <p>{bio}</p>
+          </StyledProfileInfo>
+          <StyledButton type="button" onClick={() => dispatch(openEditModal())}>
+            Edit info
+          </StyledButton>
+          <StyledModalButton
+            type="button"
+            onClick={() => handleOpenConfirmWindow()}
+          >
+            Delete
+          </StyledModalButton>
+        </StyledProfileItem>
+      ) : (
+        <Modal
+          closeModal={() => dispatch(closeEditModal())}
+          header={"Edit your profile"}
         >
-          Delete
-        </StyledModalButton>
-      </StyledProfileItem>
+          <ModalForm
+            id={id}
+            firstName={firstName}
+            lastName={lastName}
+            phone={phone}
+            email={email}
+            bio={bio}
+            closeEditModal={() => dispatch(closeEditModal())}
+          />
+        </Modal>
+      )}
+
       {openConfirmWindow && (
         <ConfirmWindow
           id={id}
