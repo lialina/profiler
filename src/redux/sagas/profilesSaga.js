@@ -15,14 +15,11 @@ import { closeModal, closeEditModal } from "../modalSlice";
 import { setFieldErrorsService } from "../../services/setFieldErrorsService";
 const axios = require("axios");
 
+const PROFILES_URL = "http://localhost:3001/profiles";
 
 export function* addNewProfileSaga({ payload: { values, setFieldError } }) {
   try {
-    const response = yield call(
-      axios.post,
-      "http://localhost:3001/profiles",
-      values
-    );
+    const response = yield call(axios.post, PROFILES_URL, values);
 
     const receivedData = response.data.data;
 
@@ -37,7 +34,7 @@ export function* addNewProfileSaga({ payload: { values, setFieldError } }) {
 
 export function* getProfilesSaga() {
   try {
-    const response = yield call(axios.get, "http://localhost:3001/profiles");
+    const response = yield call(axios.get, PROFILES_URL);
     const receivedData = response.data.data;
 
     yield put(getProfilesSuccess(receivedData));
@@ -48,11 +45,10 @@ export function* getProfilesSaga() {
 
 export function* editProfileSaga({ payload: { values, setFieldError, id } }) {
   try {
-    const response = yield call(
-      axios.put,
-      `http://localhost:3001/profiles/${id}`,
-      { ...values, id }
-    );
+    const response = yield call(axios.put, PROFILES_URL + `/${id}`, {
+      ...values,
+      id,
+    });
 
     yield put(editProfileSuccess());
     yield put(closeEditModal());
@@ -66,10 +62,7 @@ export function* editProfileSaga({ payload: { values, setFieldError, id } }) {
 
 export function* deleteProfileSaga({ payload: id }) {
   try {
-    const response = yield call(
-      axios.delete,
-      `http://localhost:3001/profiles/${id}`
-    );
+    const response = yield call(axios.delete, PROFILES_URL + `/${id}`);
 
     yield put(deleteProfileSuccess());
     yield put(getProfilesFetch());
