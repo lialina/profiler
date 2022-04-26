@@ -12,15 +12,9 @@ import {
   editProfileFailure,
 } from "../profilesSlice";
 import { closeModal, closeEditModal } from "../modalSlice";
+import { setFieldErrorsService } from "../../services/setFieldErrorsService";
 const axios = require("axios");
 
-const setFieldErrorsService = (error, setFieldError) => {
-  if (error?.response?.data?.errors) {
-    Object.entries(error.response.data.errors).forEach(([key, value]) => {
-      setFieldError(`${key}`, value);
-    });
-  }
-};
 
 export function* addNewProfileSaga({ payload: { values, setFieldError } }) {
   try {
@@ -37,7 +31,7 @@ export function* addNewProfileSaga({ payload: { values, setFieldError } }) {
   } catch (error) {
     yield put(addProfileFailure(error?.response?.data?.errors));
 
-    setFieldErrorsService();
+    setFieldErrorsService(error, setFieldError);
   }
 }
 
@@ -64,10 +58,9 @@ export function* editProfileSaga({ payload: { values, setFieldError, id } }) {
     yield put(closeEditModal());
     yield put(getProfilesFetch());
   } catch (error) {
-    console.log("error: ", error);
     yield put(editProfileFailure(error?.response?.data?.errors));
 
-    setFieldErrorsService();
+    setFieldErrorsService(error, setFieldError);
   }
 }
 
