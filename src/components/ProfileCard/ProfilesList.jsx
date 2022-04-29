@@ -10,7 +10,9 @@ const ProfilesList = () => {
   return (
     <StyledProfilesList>
       {profiles.length > 0 &&
-        profiles.map((props) => <ProfileCard key={props.id} {...props} />)}
+        profiles.map((profile) => (
+          <ProfileCard key={profile.id} {...profile} />
+        ))}
     </StyledProfilesList>
   );
 };
