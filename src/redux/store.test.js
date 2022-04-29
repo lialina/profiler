@@ -14,6 +14,7 @@ describe("Store", () => {
   it("should initially set initial state object with modalSlice", () => {
     const mockModalInitialState = {
       isModalVisible: false,
+      isEditModalVisible: false,
     };
     const state = store.getState().modal;
     expect(state).toEqual(mockModalInitialState);

@@ -1,8 +1,12 @@
 import React from "react";
+import * as redux from "react-redux";
 import { shallow, mount } from "enzyme";
 import ProfileCard from "./ProfileCard";
 
 describe("ProfileCard component", () => {
+  const useDispatchMock = jest.spyOn(redux, "useDispatch");
+  const useSelectorMock = jest.spyOn(redux, "useSelector");
+
   const props = {
     id: "",
     firstName: "",
