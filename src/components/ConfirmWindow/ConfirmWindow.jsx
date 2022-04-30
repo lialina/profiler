@@ -25,7 +25,7 @@ const ConfirmWindow = ({ id, text, onShow }) => {
           >
             Confirm
           </StyledButton>
-          <StyledModalButton type="button" onClick={() => onShow()}>
+          <StyledModalButton type="button" onClick={onShow}>
             Cancel
           </StyledModalButton>
         </StyledWrapper>
