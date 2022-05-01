@@ -4,6 +4,7 @@ import {
   errorsSelector,
   isLoadingSelector,
   isModalVisibleSelector,
+  isEditModalVisibleSelector,
 } from "./selectors";
 
 describe("Selectors", () => {
@@ -29,5 +30,11 @@ describe("Selectors", () => {
     const state = store.getState();
     const isModalVisible = store.getState().modal.isModalVisible;
     expect(isModalVisible).toEqual(isModalVisibleSelector(state));
+  });
+
+  it("should return isEditModalVisible from profilesSlice", () => {
+    const state = store.getState();
+    const isEditModalVisible = store.getState().modal.isEditModalVisible;
+    expect(isEditModalVisible).toEqual(isEditModalVisibleSelector(state));
   });
 });
