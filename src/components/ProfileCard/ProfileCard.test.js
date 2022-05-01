@@ -1,8 +1,17 @@
 import React from "react";
+import * as redux from "react-redux";
 import { shallow, mount } from "enzyme";
 import ProfileCard from "./ProfileCard";
+import StyledButton from "../Button/StyledButton";
+import { openEditModal, closeEditModal } from "../../redux/modalSlice";
+import Modal from "../Modal/Modal";
+import { StyledModalButton } from "../Modal/ModalStyles";
+import ConfirmWindow from "../ConfirmWindow/ConfirmWindow";
 
 describe("ProfileCard component", () => {
+  const useDispatchMock = jest.spyOn(redux, "useDispatch");
+  const useSelectorMock = jest.spyOn(redux, "useSelector");
+
   const props = {
     id: "",
     firstName: "",
@@ -35,4 +44,32 @@ describe("ProfileCard component", () => {
       expect(renderedProps[i]).toHaveProperty("bio");
     }
   });
+
+  it("dispatch openEditModal in case of StyledButton onClick", () => {
+    const mockedDispatch = jest.fn();
+    useSelectorMock.mockReturnValueOnce(false);
+    useDispatchMock.mockReturnValue(mockedDispatch);
+
+    const wrapper = mount(<ProfileCard />);
+    const button = wrapper.find(StyledButton);
+    button.simulate("click");
+
+    expect(mockedDispatch).toHaveBeenCalledWith(openEditModal());
+  });
+
+  it("dispatch closeEditModal in case of StyledModalButton onClick in Modal", () => {
+    useSelectorMock.mockReturnValueOnce(true);
+
+    const mockedDispatch = jest.fn();
+    useSelectorMock.mockReturnValueOnce(false);
+    useDispatchMock.mockReturnValue(mockedDispatch);
+
+    const wrapper = mount(<ProfileCard />);
+    const modal = wrapper.find(Modal);
+    const button = modal.find(StyledModalButton);
+    button.simulate("click");
+
+    expect(mockedDispatch).toHaveBeenCalledWith(closeEditModal());
+  });
+
 });

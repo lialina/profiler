@@ -20,8 +20,41 @@ export const profilesSlice = createSlice({
       state.isLoading = false;
       state.errors = action.payload;
     },
+    deleteProfileFetch: (state) => {
+      console.log("deleteProfileFetch is working");
+    },
+    deleteProfileSuccess: (state) => {
+      console.log("deleteProfileSuccess is working");
+    },
+    getProfilesFetch: (state) => {
+      console.log("getProfilesFetch is working");
+    },
+    getProfilesSuccess: (state, action) => {
+      state.profiles = [...action.payload];
+    },
+    editProfileFetch: (state) => {
+      state.isLoading = true;
+      state.errors = null;
+    },
+    editProfileSuccess: (state) => {
+      state.isLoading = false;
+    },
+    editProfileFailure: (state, action) => {
+      state.isLoading = false;
+      state.errors = action.payload;
+    },
   },
 });
 
-export const { addProfileFetch, addProfileSuccess, addProfileFailure } =
-  profilesSlice.actions;
+export const {
+  addProfileFetch,
+  addProfileSuccess,
+  addProfileFailure,
+  deleteProfileFetch,
+  deleteProfileSuccess,
+  getProfilesFetch,
+  getProfilesSuccess,
+  editProfileFetch,
+  editProfileSuccess,
+  editProfileFailure,
+} = profilesSlice.actions;

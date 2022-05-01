@@ -1,27 +1,32 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 import { Formik, Form } from "formik";
 import { resizeNone, StyledFormButton } from "./StyledForm";
 import { StyledWrapper } from "../Modal/ModalStyles";
 import validationSchema from "./ValidationSchema";
 import FormInput from "./FormInput";
-import { addProfileFetch } from "../../redux/profilesSlice";
+import { addProfileFetch, editProfileFetch } from "../../redux/profilesSlice";
 import { isLoadingSelector } from "../../redux/selectors";
 
-const ModalForm = () => {
+const ModalForm = ({ id, firstName, lastName, phone, email, bio }) => {
   const dispatch = useDispatch();
   const isLoading = useSelector(isLoadingSelector);
 
   const initialValues = {
-    firstName: "",
-    lastName: "",
-    phone: "",
-    email: "",
-    bio: "",
+    firstName: firstName || "",
+    lastName: lastName || "",
+    phone: phone || "",
+    email: email || "",
+    bio: bio || "",
   };
 
   const onSubmit = async (values, { setFieldError }) => {
-    dispatch(addProfileFetch({ values, setFieldError }));
+    if (firstName && lastName && phone && email) {
+      dispatch(editProfileFetch({ values, setFieldError, id }));
+    } else {
+      dispatch(addProfileFetch({ values, setFieldError }));
+    }
   };
 
   return (
@@ -60,6 +65,15 @@ const ModalForm = () => {
       }
     </Formik>
   );
+};
+
+ModalForm.propTypes = {
+  id: PropTypes.string,
+  firstName: PropTypes.string,
+  lastName: PropTypes.string,
+  phone: PropTypes.string,
+  email: PropTypes.string,
+  bio: PropTypes.string,
 };
 
 export default ModalForm;

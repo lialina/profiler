@@ -2,9 +2,9 @@ import * as redux from "react-redux";
 import { shallow, mount } from "enzyme";
 import ModalForm from "./ModalForm";
 import { Formik } from "formik";
-import { addProfileFetch } from "../../redux/profilesSlice";
+import { addProfileFetch, editProfileFetch } from "../../redux/profilesSlice";
 
-const mockPayload = {
+const mockAddProfilePayload = {
   values: {
     firstName: "Anna",
     lastName: "Jons",
@@ -13,6 +13,27 @@ const mockPayload = {
     bio: "Developer",
   },
   setFieldError: jest.fn(),
+};
+
+const mockEditProfilePayload = {
+  values: {
+    firstName: "Anna",
+    lastName: "Jons",
+    phone: "+80302525789",
+    email: "anna.jons@gmail.com",
+    bio: "Developer",
+  },
+  setFieldError: jest.fn(),
+  id: "1",
+};
+
+const mockProps = {
+  firstName: "Anna",
+  lastName: "Jons",
+  phone: "+80302525789",
+  email: "anna.jons@gmail.com",
+  bio: "Developer",
+  id: "1",
 };
 
 describe("ModalForm component", () => {
@@ -31,16 +52,18 @@ describe("ModalForm component", () => {
     expect(text).toBe("Loading...");
   });
 
-  it("dispatch in case of form submitting", () => {
+  it("dispatch in case of form submitting with adding new profile", () => {
     const mockedDispatch = jest.fn();
     useSelectorMock.mockReturnValueOnce(false);
     useDispatchMock.mockReturnValue(mockedDispatch);
 
     const wrapper = mount(<ModalForm />);
-    wrapper.find(Formik).props().onSubmit(mockPayload.values, {
-      setFieldError: mockPayload.setFieldError,
+    wrapper.find(Formik).props().onSubmit(mockAddProfilePayload.values, {
+      setFieldError: mockAddProfilePayload.setFieldError,
     });
 
-    expect(mockedDispatch).toHaveBeenCalledWith(addProfileFetch(mockPayload));
+    expect(mockedDispatch).toHaveBeenCalledWith(
+      addProfileFetch(mockAddProfilePayload)
+    );
   });
 });

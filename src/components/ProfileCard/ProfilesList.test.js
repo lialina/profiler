@@ -11,6 +11,7 @@ describe("ProfilesList component", () => {
       phone: "+80302525789",
       email: "anna.jons@gmail.com",
       bio: "Developer",
+      id: "1",
     },
   ];
 

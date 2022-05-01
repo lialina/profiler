@@ -6,7 +6,7 @@ import Modal from "./components/Modal/Modal";
 import Button from "../src/components/Button/Button";
 import ProfilesList from "./components/ProfileCard/ProfilesList";
 import { openModal, closeModal } from "./redux/modalSlice";
-import { ModalButton } from "../src/components/Modal/ModalStyles";
+import { StyledModalButton } from "../src/components/Modal/ModalStyles";
 
 describe("App component", () => {
   const useDispatchMock = jest.spyOn(redux, "useDispatch");
@@ -41,13 +41,13 @@ describe("App component", () => {
     expect(mockedDispatch).toHaveBeenCalledWith(openModal());
   });
 
-  it("closeModal with onClick on ModalButton", () => {
+  it("closeModal with onClick on StyledModalButton", () => {
     const mockedDispatch = jest.fn();
     useDispatchMock.mockReturnValue(mockedDispatch);
     useSelectorMock.mockReturnValue(true);
 
     const wrapper = mount(<App />);
-    const button = wrapper.find(ModalButton);
+    const button = wrapper.find(StyledModalButton);
     button.simulate("click");
 
     expect(mockedDispatch).toHaveBeenCalledWith(closeModal());
