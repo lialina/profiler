@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { isEditModalVisibleSelector } from "../../redux/selectors";
 import { openEditModal, closeEditModal } from "../../redux/modalSlice";
 
-const ProfilesCard = ({ id, firstName, lastName, phone, email, bio }) => {
+const ProfileCard = ({ id, firstName, lastName, phone, email, bio }) => {
   const dispatch = useDispatch();
   const isEditModalVisible = useSelector(isEditModalVisibleSelector);
   const [openConfirmWindow, setOpenConfirmWindow] = useState(false);
@@ -53,7 +53,6 @@ const ProfilesCard = ({ id, firstName, lastName, phone, email, bio }) => {
             phone={phone}
             email={email}
             bio={bio}
-            closeEditModal={() => dispatch(closeEditModal())}
           />
         </Modal>
       )}
@@ -71,7 +70,7 @@ const ProfilesCard = ({ id, firstName, lastName, phone, email, bio }) => {
   );
 };
 
-ProfilesCard.propTypes = {
+ProfileCard.propTypes = {
   id: PropTypes.string,
   firstName: PropTypes.string,
   lastName: PropTypes.string,
@@ -80,4 +79,4 @@ ProfilesCard.propTypes = {
   bio: PropTypes.string,
 };
 
-export default ProfilesCard;
+export default ProfileCard;
