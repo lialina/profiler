@@ -15,7 +15,7 @@ import { closeModal, closeEditModal } from "../modalSlice";
 import { setFieldErrorsService } from "../../services/setFieldErrorsService";
 const axios = require("axios");
 
-const PROFILES_URL = "http://localhost:3001/profiles";
+export const PROFILES_URL = "http://localhost:3001/profiles";
 
 export function* addNewProfileSaga({ payload: { values, setFieldError } }) {
   try {
